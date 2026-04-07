@@ -40,6 +40,8 @@
     <arg name="fsm" default="false"/>
     <arg name="/fsm/logic_gate" default="false"/>
 
+    <arg name="object_detection" default="false"/>
+
     <arg name="LED" default="false" />
     <arg name="/LED/emitter" default="false" />
     <!-- end switch args -->
@@ -179,6 +181,31 @@
     </group>
     <!-- End Lane Control -->
 
+
+
+    <!-- Start Object Detection -->
+    <group if="$(arg object_detection)">
+        <remap from="object_detection_node/image/compressed" to="$(arg camera_topic)/image/compressed"/>
+        <remap from="object_detection_node/camera_info" to="$(arg camera_topic)/camera_info"/>
+        <remap from="object_detection_node/wheels_cmd" to="wheels_driver_node/wheels_cmd"/>
+        <!-- Combined with lane following: publish obstacle info to the topic the
+             lane controller already subscribes to, and disable direct wheel commands -->
+        <group if="$(arg lane_following)">
+            <remap from="object_detection_node/obstacle_distance" to="road_anomaly_watcher/obstacle_distance"/>
+            <include file="$(find object_detection)/launch/object_detection_node.launch">
+                <arg name="veh" value="$(arg veh)"/>
+                <arg name="param_file_name" value="combined"/>
+            </include>
+        </group>
+        <!-- Standalone mode: object detection drives wheels directly -->
+        <group unless="$(arg lane_following)">
+            <include file="$(find object_detection)/launch/object_detection_node.launch">
+                <arg name="veh" value="$(arg veh)"/>
+                <arg name="param_file_name" value="$(arg param_file_name)"/>
+            </include>
+        </group>
+    </group>
+    <!-- End Object Detection -->
 
 
     <!-- Start LEDs -->

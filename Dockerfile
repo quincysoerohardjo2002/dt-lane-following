@@ -129,3 +129,6 @@ ENV DUCKIETOWN_DATA="/tmp/duckietown-data"
 RUN echo 'config echo 1' > .compmake.rc
 
 COPY assets/bin/send-fsm-state.sh /usr/local/bin
+
+# object detection model
+COPY assets/best.onnx "${PROJECT_PATH}/assets/best.onnx"

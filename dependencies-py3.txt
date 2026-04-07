@@ -14,3 +14,6 @@ duckietown-utils-ente==7.0.0
 
 git+https://github.com/duckietown/lib-dt-computer-vision.git@ente
 git+https://github.com/duckietown/lib-dt-state-estimation.git@ente
+
+# -- Object Detection --
+onnxruntime
