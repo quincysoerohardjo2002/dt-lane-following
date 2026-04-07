@@ -1,0 +1,16 @@
+# LIST YOUR PYTHON3 PACKAGES HERE
+
+ruamel.yaml==0.18.5
+
+comptests-z6==6.0.4
+
+procgraph-z6==6.1.9
+ros-node-utils==2.0.0
+compmake-z6==6.1.5
+
+# -- Duckietown --
+
+duckietown-utils-ente==7.0.0
+
+git+https://github.com/duckietown/lib-dt-computer-vision.git@ente
+git+https://github.com/duckietown/lib-dt-state-estimation.git@ente

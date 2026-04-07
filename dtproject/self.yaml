@@ -1,0 +1,8 @@
+name: "dt-lane-following"
+maintainer:
+    name: "Andrea F. Daniele"
+    email: "afdaniele@duckietown.com"
+description: "Minimal lane following stack for Duckietown"
+version: 4.1.4
+# pick an icon from: https://fontawesome.com/v4.7.0/icons/
+icon: diamond
