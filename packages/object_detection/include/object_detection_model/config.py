@@ -9,8 +9,8 @@ if _project_path:
 else:
     PROJECT_ROOT = Path(__file__).resolve().parents[4]
 
-MODEL_PATH = PROJECT_ROOT / "assets" / "best.onnx"
+MODEL_PATH = PROJECT_ROOT / "assets" / "best (1).onnx"
 
-CONF_THRESHOLD = 0.2
+CONF_THRESHOLD = 0.3
 STOP_DISTANCE = 0.5
 FORWARD_PWM = 0.5
