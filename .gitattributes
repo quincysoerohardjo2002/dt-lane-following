@@ -8,3 +8,6 @@
 
 LICENSE.pdf  !filter !diff !merge binary
 docs/src/logo.png  !filter !diff !merge binary
+packages/fsm/fsm_default.png  !filter !diff !merge binary
+packages/visualization_tools/meshes/duckie.png  !filter !diff !merge binary
+packages/visualization_tools/meshes/circlegrid-square.jpg  !filter !diff !merge binary
