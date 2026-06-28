@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>maze_navigation</name>
+  <version>1.0.0</version>
+  <description>Duckietown maze navigation: Dijkstra path planning + navigator state machine</description>
+  <maintainer email="student@example.com">Student</maintainer>
+  <license>MIT</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <depend>rospy</depend>
+  <depend>std_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>duckietown_msgs</depend>
+  <depend>sensor_msgs</depend>
+</package>

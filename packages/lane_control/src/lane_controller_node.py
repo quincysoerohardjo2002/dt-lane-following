@@ -101,6 +101,7 @@ class LaneControllerNode(DTROS):
         self.at_obstacle_stop_line = False
 
         self.current_pose_source = "lane_filter"
+        self.active = True
 
         # Construct publishers
         self.pub_car_cmd = rospy.Publisher(
@@ -108,6 +109,9 @@ class LaneControllerNode(DTROS):
         )
 
         # Construct subscribers
+        self.sub_switch = rospy.Subscriber(
+            "~switch", BoolStamped, self.cbSwitch, queue_size=1
+        )
         self.sub_lane_reading = rospy.Subscriber(
             "~lane_pose", LanePose, self.cbAllPoses, "lane_filter", queue_size=1
         )
@@ -129,6 +133,16 @@ class LaneControllerNode(DTROS):
         )
 
         self.log("Initialized!")
+
+    def cbSwitch(self, msg):
+        self.active = msg.data
+        if not self.active:
+            stop_cmd = Twist2DStamped()
+            stop_cmd.header.stamp = rospy.Time.now()
+            stop_cmd.v = 0.0
+            stop_cmd.omega = 0.0
+            self.pub_car_cmd.publish(stop_cmd)
+            self.log("Lane controller uitgeschakeld — bot gestopt")
 
     def cbObstacleStopLineReading(self, msg):
         """
@@ -181,10 +195,10 @@ class LaneControllerNode(DTROS):
 
         if pose_source == self.current_pose_source:
             self.pose_msg_dict[pose_source] = input_pose_msg
-
             self.pose_msg = input_pose_msg
 
-            self.getControlAction(self.pose_msg)
+            if self.active:
+                self.getControlAction(self.pose_msg)
 
     def cbWheelsCmdExecuted(self, msg_wheels_cmd):
         """Callback that reports if the requested control action was executed.

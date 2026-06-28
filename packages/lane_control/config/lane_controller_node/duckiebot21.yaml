@@ -1,10 +1,10 @@
-#lane_control/lane_controller_node
-v_bar: 0.17
-k_d: -5.0
-k_theta: -5.0
-k_Id: -5.0
+#lane_control/lane_controller_node — duckiebot21
+v_bar: 0.21
+k_d: -2.0
+k_theta: -2.0
+k_Id: -2.0
 k_Iphi: 0.0
-theta_thres_max: 0.75  #0.523
+theta_thres_max: 0.75
 theta_thres_min: -0.5
 d_thres: 0.2615
 d_offset: 0.0
@@ -19,7 +19,6 @@ integral_bounds:
     top: 1.2
     bot: -1.2
 
-# TODO: lane filter should publish this information
 d_resolution: 0.011
 phi_resolution: 0.051
 

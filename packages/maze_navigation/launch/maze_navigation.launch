@@ -1,0 +1,44 @@
+<launch>
+  <arg name="veh"    default="$(env VEHICLE_NAME)" />
+  <arg name="config" default="$(find maze_navigation)/config/maze_graph.yaml" />
+
+  <!-- ============================================================ -->
+  <!-- 1. Volledige lane following pipeline + YOLO obstakeldetectie -->
+  <!--    Bevat: camera, anti_instagram, line_detector,             -->
+  <!--    ground_projection, lane_filter, lane_controller, FSM,     -->
+  <!--    object_detection (stopt automatisch bij duckie via        -->
+  <!--    road_anomaly_watcher -> lane_controller)                  -->
+  <!-- ============================================================ -->
+  <include file="$(find duckietown_demos)/launch/lane_following_with_detection.launch">
+    <arg name="veh" value="$(arg veh)" />
+  </include>
+
+  <!-- ============================================================ -->
+  <!-- 2. Path Planner — Dijkstra, berekent A->B->E eenmalig       -->
+  <!-- ============================================================ -->
+  <node pkg="maze_navigation" type="path_planner_node.py" name="path_planner_node"
+        output="screen">
+    <param name="config" value="$(arg config)" />
+    <param name="veh"    value="$(arg veh)" />
+  </node>
+
+  <!-- ============================================================ -->
+  <!-- 3. Navigator — encoder afstandsmeting + goal stop            -->
+  <!-- ============================================================ -->
+  <node pkg="maze_navigation" type="navigator_node.py" name="navigator_node"
+        output="screen">
+    <param name="veh"             value="$(arg veh)" />
+    <param name="config"          value="$(arg config)" />
+    <param name="goal_distance_m" value="2.40" />
+    <param name="tile_size_m"     value="0.50" />
+    <param name="debounce_frames" value="10" />
+    <param name="stop_hz"         value="20.0" />
+  </node>
+
+  <!-- ============================================================ -->
+  <!-- 4. Map Visualizer — ASCII dashboard in terminal              -->
+  <!-- ============================================================ -->
+  <node pkg="maze_navigation" type="map_visualizer_node.py" name="map_visualizer_node"
+        output="screen" />
+
+</launch>
